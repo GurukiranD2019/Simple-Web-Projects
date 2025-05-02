@@ -1,0 +1,49 @@
+body{
+    font-family: Arial;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.156),rgba(0, 0, 0, 0.656)),url("bg2.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background: image opacity 50%;
+    
+    
+
+
+}
+
+.container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(166, 197, 246, 0.781);
+    width: 600px;
+    height: 600px;
+    align-items: center;
+    border-radius: 10px;
+    border-width: 0;
+
+}
+
+.forms{
+    padding: 20px;
+    padding-left: 200px;
+}
+
+.pokemon{
+    width: 200px;
+    height: 200px;
+}
+
+.submit-btn{
+    background-color: rgb(89, 89, 255);
+    color:white;
+    width: auto;
+    height: 50px;
+    border-radius: 10px;
+    margin-left: 40px;
+    margin-top: 10px;
+    padding: 10px;
+}
+.submit-btn:hover{
+    background-color: rgb(168, 168, 255);
+}

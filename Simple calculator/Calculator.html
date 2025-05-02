@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic Calculator</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #052736;
+      }
+
+      .container {
+      background-color: rgba(255, 255, 255, 0.349);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+      margin-bottom: 20px;
+      }
+
+      .form-group {
+      margin-bottom: 15px;
+      }
+
+      .form-control {
+      max-width: 300px;
+      margin: 0 auto;
+      }
+
+      .btn {
+      margin: 5px;
+      }
+
+      p {
+      font-size: 1.2em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container text-center">
+      <h1>Basic Calculator App</h1>
+      <div class="form-group">
+        <label for="valueA">Value A:</label>
+        <input
+          type="number"
+          id="valueA"
+          name="valueA"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="valueB">Value B:</label>
+        <input
+          type="number"
+          id="valueB"
+          name="valueB"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <button id="addButton" class="btn btn-success">Add (+)</button>
+        <button id="subtractButton" class="btn btn-danger">Subtract (-)</button>
+        <button id="multiplyButton" class="btn btn-warning">Multiply (*)</button>
+        <button id="divideButton" class="btn btn-info">Divide (/)</button>
+        <button id="percentageButton" class="btn btn-primary">Percentage (%)</button>
+      </div>
+      <div class="form-group"></div>
+        <p>Result: <span id="result"></span></p>
+      </div>
+    </div>
+    <script>
+      class Calculator {
+        add(a, b) {
+          return a + b;
+        }
+
+        subtract(a, b) {
+          return a - b;
+        }
+
+        multiply(a, b) {
+          return a * b;
+        }
+
+        divide(a, b) {
+          if (b === 0) {
+            throw new Error("Division by zero is not allowed.");
+          }
+          return a / b;
+        }
+
+        percentage(a, b) {
+          return (a / b) * 100;
+        }
+      }
+
+      const calculator = new Calculator();
+
+      document.getElementById("addButton").addEventListener("click", () => {
+        const a = parseFloat(document.getElementById("valueA").value);
+        const b = parseFloat(document.getElementById("valueB").value);
+        document.getElementById("result").textContent = calculator.add(a, b);
+      });
+
+      document
+        .getElementById("subtractButton")
+        .addEventListener("click", () => {
+          const a = parseFloat(document.getElementById("valueA").value);
+          const b = parseFloat(document.getElementById("valueB").value);
+          document.getElementById("result").textContent = calculator.subtract(
+            a,
+            b
+          );
+        });
+
+      document
+        .getElementById("multiplyButton")
+        .addEventListener("click", () => {
+          const a = parseFloat(document.getElementById("valueA").value);
+          const b = parseFloat(document.getElementById("valueB").value);
+          document.getElementById("result").textContent = calculator.multiply(
+            a,
+            b
+          );
+        });
+
+      document.getElementById("divideButton").addEventListener("click", () => {
+        const a = parseFloat(document.getElementById("valueA").value);
+        const b = parseFloat(document.getElementById("valueB").value);
+        try {
+          document.getElementById("result").textContent = calculator.divide(
+            a,
+            b
+          );
+        } catch (error) {
+          document.getElementById("result").textContent = error.message;
+        }
+      });
+
+      document
+        .getElementById("percentageButton")
+        .addEventListener("click", () => {
+          const a = parseFloat(document.getElementById("valueA").value);
+          const b = parseFloat(document.getElementById("valueB").value);
+          document.getElementById("result").textContent = calculator.percentage(
+            a,
+            b
+          );
+        });
+    </script>
+  </body>
+</html>

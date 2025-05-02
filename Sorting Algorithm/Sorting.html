@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Algorithms</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-image: url("sort.png");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        position: relative;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: -1;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+      }
+      .explanation {
+        text-align: justify;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Sorting Algorithms</h1>
+      <br />
+
+      <p class="text-center">
+        This is a simple web application that allows you to sort numbers using
+        different sorting algorithms.
+      </p>
+
+      <br />
+      <div id="step1">
+        <div class="form-group">
+          <label for="numCount">How many numbers do you want to sort?</label>
+          <input type="number" class="form-control" id="numCount" required />
+        </div>
+        <div class="form-group">
+          <label for="algorithm">Choose sorting algorithm:</label>
+          <select class="form-control" id="algorithm">
+            <option value="bubble">Bubble Sort</option>
+            <option value="merge">Merge Sort</option>
+            <option value="quick">Quick Sort</option>
+            <option value="insertion">Insertion Sort</option>
+            <option value="heap">Heap Sort</option>
+            <option value="counting">Counting Sort</option>
+            <option value="radix">Radix Sort</option>
+          </select>
+        </div>
+        <br />
+        <div class="text-center">
+          <button
+            class="btn btn-primary"
+            style="width: 100px"
+            onclick="generateInputs()"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <div id="step2" style="display: none">
+        <div id="numberInputs" class="form-group"></div>
+        <button class="btn btn-primary" onclick="sortNumbers()">Sort</button>
+      </div>
+      <div id="results" style="display: none">
+        <p id="inputNumbers"></p>
+        <p id="sortedNumbers"></p>
+        <p id="algorithmUsed"></p>
+        <p id="algorithmExplanation" class="explanation"></p>
+        <button class="btn btn-primary" onclick="tryAgain()">Try again</button>
+      </div>
+    </div>
+
+    <script>
+      function generateInputs() {
+        const numCount = document.getElementById("numCount").value;
+        if (numCount <= 0) {
+          alert("Please mention the array size.");
+          return;
+        }
+        const numberInputs = document.getElementById("numberInputs");
+        numberInputs.innerHTML = "";
+
+        for (let i = 0; i < numCount; i++) {
+          const input = document.createElement("input");
+          input.type = "number";
+          input.className = "form-control mb-2";
+          input.id = "num" + i;
+          input.required = true;
+          numberInputs.appendChild(input);
+        }
+
+        document.getElementById("step1").style.display = "none";
+        document.getElementById("step2").style.display = "block";
+      }
+
+      function sortNumbers() {
+        const numCount = document.getElementById("numCount").value;
+        const algorithm = document.getElementById("algorithm").value;
+        let numbers = [];
+
+        for (let i = 0; i < numCount; i++) {
+          const value = document.getElementById("num" + i).value;
+          if (value === "") {
+            alert("Please enter all numbers.");
+            return;
+          }
+          numbers.push(parseInt(value));
+        }
+
+        const inputNumbers = numbers.slice();
+
+        if (algorithm === "bubble") {
+          bubbleSort(numbers);
+        } else if (algorithm === "merge") {
+          numbers = mergeSort(numbers);
+        } else if (algorithm === "quick") {
+          numbers = quickSort(numbers);
+        } else if (algorithm === "insertion") {
+          insertionSort(numbers);
+        } else if (algorithm === "heap") {
+          heapSort(numbers);
+        } else if (algorithm === "counting") {
+          numbers = countingSort(numbers);
+        } else if (algorithm === "radix") {
+          numbers = radixSort(numbers);
+        }
+
+        document.getElementById("inputNumbers").innerText =
+          "Input numbers: " + inputNumbers.join(", ");
+        document.getElementById("sortedNumbers").innerText =
+          "Sorted numbers: " + numbers.join(", ");
+        document.getElementById("algorithmUsed").innerText =
+          "Algorithm used: " +
+          algorithm.charAt(0).toUpperCase() +
+          algorithm.slice(1) +
+          " Sort";
+
+        let explanation = "";
+        if (algorithm === "bubble") {
+          explanation =
+            "Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. The algorithm gets its name because smaller elements 'bubble' to the top of the list.";
+        } else if (algorithm === "merge") {
+          explanation =
+            "Merge Sort is an efficient, stable, comparison-based, divide and conquer sorting algorithm. Most implementations produce a stable sort, meaning that the implementation preserves the input order of equal elements in the sorted output. Merge Sort works by recursively dividing the unsorted list into n sublists, each containing one element, and then repeatedly merging sublists to produce new sorted sublists until there is only one sublist remaining.";
+        } else if (algorithm === "quick") {
+          explanation =
+            "Quick Sort is an efficient, in-place, comparison-based, divide and conquer sorting algorithm. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays are then sorted recursively. This can be done in-place, requiring small additional amounts of memory to perform the sorting.";
+        } else if (algorithm === "insertion") {
+          explanation =
+            "Insertion Sort is a simple sorting algorithm that builds the final sorted array one item at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.";
+        } else if (algorithm === "heap") {
+          explanation =
+            "Heap Sort is a comparison-based sorting algorithm that uses a binary heap data structure. It divides its input into a sorted and an unsorted region, and it iteratively shrinks the unsorted region by extracting the largest element and moving that to the sorted region.";
+        } else if (algorithm === "counting") {
+          explanation =
+            "Counting Sort is an integer sorting algorithm that operates by counting the number of objects that have each distinct key value, and using arithmetic to determine the positions of each key value in the output sequence.";
+        } else if (algorithm === "radix") {
+          explanation =
+            "Radix Sort is a non-comparative sorting algorithm. It avoids comparison by creating and distributing elements into buckets according to their radix. For elements with more than one significant digit, this bucketing process is repeated for each digit, while preserving the ordering of the prior step, until all digits have been considered.";
+        }
+
+        document.getElementById("algorithmExplanation").innerText = explanation;
+
+        document.getElementById("step2").style.display = "none";
+        document.getElementById("results").style.display = "block";
+      }
+
+      function bubbleSort(arr) {
+        let len = arr.length;
+        for (let i = 0; i < len; i++) {
+          for (let j = 0; j < len - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+              let temp = arr[j];
+              arr[j] = arr[j + 1];
+              arr[j + 1] = temp;
+            }
+          }
+        }
+      }
+
+      function mergeSort(arr) {
+        if (arr.length <= 1) {
+          return arr;
+        }
+
+        const mid = Math.floor(arr.length / 2);
+        const left = arr.slice(0, mid);
+        const right = arr.slice(mid);
+
+        return merge(mergeSort(left), mergeSort(right));
+      }
+
+      function merge(left, right) {
+        let result = [];
+        let leftIndex = 0;
+        let rightIndex = 0;
+
+        while (leftIndex < left.length && rightIndex < right.length) {
+          if (left[leftIndex] < right[rightIndex]) {
+            result.push(left[leftIndex]);
+            leftIndex++;
+          } else {
+            result.push(right[rightIndex]);
+            rightIndex++;
+          }
+        }
+
+        return result
+          .concat(left.slice(leftIndex))
+          .concat(right.slice(rightIndex));
+      }
+
+      function quickSort(arr) {
+        if (arr.length <= 1) {
+          return arr;
+        }
+
+        const pivot = arr[arr.length - 1];
+        const left = [];
+        const right = [];
+
+        for (let i = 0; i < arr.length - 1; i++) {
+          if (arr[i] < pivot) {
+            left.push(arr[i]);
+          } else {
+            right.push(arr[i]);
+          }
+        }
+
+        return quickSort(left).concat(pivot, quickSort(right));
+      }
+
+      function insertionSort(arr) {
+        for (let i = 1; i < arr.length; i++) {
+          let key = arr[i];
+          let j = i - 1;
+          while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+          }
+          arr[j + 1] = key;
+        }
+      }
+
+      function heapSort(arr) {
+        let n = arr.length;
+
+        for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+          heapify(arr, n, i);
+        }
+
+        for (let i = n - 1; i > 0; i--) {
+          let temp = arr[0];
+          arr[0] = arr[i];
+          arr[i] = temp;
+
+          heapify(arr, i, 0);
+        }
+      }
+
+      function heapify(arr, n, i) {
+        let largest = i;
+        let left = 2 * i + 1;
+        let right = 2 * i + 2;
+
+        if (left < n && arr[left] > arr[largest]) {
+          largest = left;
+        }
+
+        if (right < n && arr[right] > arr[largest]) {
+          largest = right;
+        }
+
+        if (largest != i) {
+          let swap = arr[i];
+          arr[i] = arr[largest];
+          arr[largest] = swap;
+
+          heapify(arr, n, largest);
+        }
+      }
+
+      function countingSort(arr) {
+        let max = Math.max(...arr);
+        let min = Math.min(...arr);
+        let range = max - min + 1;
+
+        let count = new Array(range).fill(0);
+        let output = new Array(arr.length).fill(0);
+
+        for (let i = 0; i < arr.length; i++) {
+          count[arr[i] - min]++;
+        }
+
+        for (let i = 1; i < count.length; i++) {
+          count[i] += count[i - 1];
+        }
+
+        for (let i = arr.length - 1; i >= 0; i--) {
+          output[count[arr[i] - min] - 1] = arr[i];
+          count[arr[i] - min]--;
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+          arr[i] = output[i];
+        }
+
+        return arr;
+      }
+
+      function radixSort(arr) {
+        const max = Math.max(...arr);
+        let exp = 1;
+        while (Math.floor(max / exp) > 0) {
+          countingSortByDigit(arr, exp);
+          exp *= 10;
+        }
+        return arr;
+      }
+
+      function countingSortByDigit(arr, exp) {
+        let output = new Array(arr.length).fill(0);
+        let count = new Array(10).fill(0);
+
+        for (let i = 0; i < arr.length; i++) {
+          let digit = Math.floor(arr[i] / exp) % 10;
+          count[digit]++;
+        }
+
+        for (let i = 1; i < 10; i++) {
+          count[i] += count[i - 1];
+        }
+
+        for (let i = arr.length - 1; i >= 0; i--) {
+          let digit = Math.floor(arr[i] / exp) % 10;
+          output[count[digit] - 1] = arr[i];
+          count[digit]--;
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+          arr[i] = output[i];
+        }
+      }
+
+      function tryAgain() {
+        document.getElementById("step1").style.display = "block";
+        document.getElementById("step2").style.display = "none";
+        document.getElementById("results").style.display = "none";
+        document.getElementById("numCount").value = "";
+        document.getElementById("algorithm").value = "bubble";
+        document.getElementById("numberInputs").innerHTML = "";
+      }
+    </script>
+  </body>
+</html>

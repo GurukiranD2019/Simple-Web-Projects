@@ -1,0 +1,10 @@
+Pokemon API Project
+
+* Built using Javascript and html.
+* Retrieve the images of pokemon when typed a specific pokemon by using fetch().
+
+API Link: https://pokeapi.co/
+Reference: https://www.youtube.com/watch?v=37vxWr0WgQk
+
+
+

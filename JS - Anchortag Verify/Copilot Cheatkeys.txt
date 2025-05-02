@@ -1,0 +1,8 @@
+Tab - to accept the suggested code
+
+To get suggested logics write a prompt within the comments and verify before using the logics
+
+CMD + Enter - Opens side panel to see further suggestions
+
+CMD + I - Opens inline conversation window and to close it press ESC
+

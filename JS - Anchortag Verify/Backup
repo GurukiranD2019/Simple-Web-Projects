@@ -1,0 +1,57 @@
+/*
+
+const anchors = document.querySelectorAll("a");
+
+anchors.forEach((anchor, index) => {
+  const href = anchor.getAttribute("href");
+  const target = anchor.getAttribute("target");
+
+  if (href !== "") {
+    if (target === "_blank") {
+      console.log(
+        `Anchor ${
+          index + 1
+        }: Yes (Valid href - "${href}") - Opens in a new window)`
+      );
+    } else {
+      console.warn(
+        `Anchor ${index + 1}: Valid but Opens in the same window - ${
+          anchor.outerHTML
+        }`
+      );
+    }
+  } else {
+    console.error(`Anchor ${index + 1}: Missing href - ${anchor.outerHTML}`);
+  }
+});
+
+*/
+
+const anchors = document.querySelectorAll("a");
+
+anchors.forEach((anchor, index) => {
+  const href = anchor.getAttribute("href");
+  const target = anchor.getAttribute("target");
+
+  if (target === "") {
+    console.warn(
+      `Anchor ${index + 1}: Valid : Target Parameter missing - ${
+        anchor.outerHTML
+      }`
+    );
+  } else if (href !== "" && target === "_blank") {
+    console.log(
+      `Anchor ${
+        index + 1
+      }: Yes (Valid href - "${href}") - Opens in a new window)`
+    );
+  } else if (href !== "") {
+    console.warn(
+      `Anchor ${index + 1}: Valid but Opens in the same window - ${
+        anchor.outerHTML
+      }`
+    );
+  } else {
+    console.error(`Anchor ${index + 1}: Missing href - ${anchor.outerHTML}`);
+  }
+});

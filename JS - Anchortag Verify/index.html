@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; margin: 40px">Anchor Tag checker </h1>
+    <p style="text-align: center">
+      Check in console if all buttons/anchor tags are present
+    </p>
+    
+
+    <p style="text-align: center">
+      This Script will check if all anchor tags have href and target attributes along with their text.
+
+    </p>
+    <br>
+
+    <a href="www.google.com" target="_blank"> First link - valid opens in new window</a>
+
+    <br />
+    <br />
+
+    <a href="" target="_blank">Second link - empty</a>
+    <br>
+    <br>
+    
+
+    
+
+    <a href="www.google.com" target="">third link - valid : Missing target parameter</a>
+
+    <br>
+    <br>
+
+    <a href=> fourth link - empty : No href no target</a>
+    
+
+    <br />
+  </body>
+  <script src="script.js"></script>
+</html>
